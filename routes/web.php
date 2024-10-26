@@ -9,4 +9,5 @@ Route::get('/', function () {
 });
 
 Route::resource('login', LoginController::class);
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::resource('registration', RegistrationController::class);

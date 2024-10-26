@@ -50,6 +50,7 @@ class RegistrationController extends Controller
         ])->onlyInput('email');
     }
 
+
     /**
      * Display the specified resource.
      */
