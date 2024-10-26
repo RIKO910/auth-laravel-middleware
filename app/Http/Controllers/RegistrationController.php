@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterStoreRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class RegistrationController extends Controller
 {
@@ -28,7 +31,23 @@ class RegistrationController extends Controller
      */
     public function store(RegisterStoreRequest $request)
     {
-        dd($request->all());
+        User::create([
+            'name'     =>$request->name,
+            'email'    =>$request->email,
+            'phone'    =>$request->phone,
+            'password' =>Hash::make($request->password),
+        ]);
+
+        $credentials = $request->only('email', 'password');
+
+        if(Auth::attempt($credentials)){
+            $request->session()->regenerate();
+            return redirect()->intended('/');
+        }
+
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ])->onlyInput('email');
     }
 
     /**
