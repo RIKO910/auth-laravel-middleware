@@ -1,7 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use \App\Http\Controllers\LoginController;
+use \App\Http\Controllers\RegistrationController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('master');
 });
+
+Route::resource('login', LoginController::class);
+Route::resource('registration', RegistrationController::class);
